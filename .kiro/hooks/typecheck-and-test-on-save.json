@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Typecheck and test on save",
+      "trigger": "PostFileSave",
+      "description": "Run tsc and the test suite whenever a source or test file is saved.",
+      "matcher": "\\.(ts|css)$",
+      "action": {
+        "type": "command",
+        "command": "npm run typecheck && npm test",
+        "timeout": 120
+      }
+    }
+  ]
+}
