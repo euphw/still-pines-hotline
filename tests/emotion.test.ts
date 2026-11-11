@@ -17,6 +17,21 @@ describe('classifyEmotion examples', () => {
     expect(classifyEmotion(text)).toBe(expected);
   });
 
+  const english: Array<[string, string]> = [
+    ['I was terrified and screamed, then ran away', 'fear'],
+    ['She cried by the window for hours, alone with her tears', 'sadness'],
+    ['They fought and he smashed every plate in a rage', 'anger'],
+    ['Whispers in the wall, and a shadow moved on its own', 'eerie'],
+    ['It was quiet and peaceful, and I felt safe', 'calm'],
+    ['Someone knocked at midnight and a shadow slid under the door', 'eerie'],
+    ['I just checked in', 'eerie'],
+  ];
+  it.each(english)('English: %s -> %s', (text, expected) => {
+    expect(classifyEmotion(text)).toBe(expected);
+  });
+  it('treats a negated English feeling as reassurance', () => {
+    expect(classifyEmotion("I was not afraid at all")).toBe('calm');
+  });
   it('treats a negated feeling as reassurance', () => {
     expect(classifyEmotion('我一点也不害怕')).toBe('calm');
   });

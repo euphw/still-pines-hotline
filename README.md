@@ -1,17 +1,16 @@
-# Still Pines Inn Hotline · 静林旅馆留言答录机
+# Still Pines Inn Hotline
 
 Kiroween 2026 entry, **Costume Contest** category.
 
 Pick a room in an abandoned hotel, press REC on an old answering machine, and leave a note about what happened there. The app tags the note with an emotion (fear, sadness, anger, eerie, calm) and drops a marker on the hotel map. Works on phones and desktop browsers. No login, no backend, no external AI. Everything stays in your browser's localStorage.
 
-选一个废弃旅馆的房间，按下答录机的录音键，留下一段“这里发生过什么”。应用会为留言标注情绪，并把标记显示在旅馆地图上。
 
 ## Features
 - SVG floor plan with 7 rooms; mouse, touch and keyboard friendly
 - Answering machine flow: REC (reels, light, beep) -> text -> confirm emotion -> save
-- Keyword emotion classifier for Chinese text (handles simple negation); you can override the suggestion
+- Keyword emotion classifier for English and Chinese text (handles simple negation); you can override the suggestion
 - Map markers combine color and glyph, with counts
-- Chinese / English UI, sample messages in both languages
+- English UI by default, with a Chinese / English switch; sample messages in both languages
 - Synthesized WebAudio sounds (off by default), reduced-motion support
 - Sample data on first launch; Reset and Clear buttons
 

@@ -31,6 +31,34 @@ const LEXICON: Record<Emotion, Array<[string, number]>> = {
   ],
 };
 
+/** English word stems (prefix match on lowercase words). */
+const EN_LEXICON: Record<Emotion, Array<[string, number]>> = {
+  fear: [
+    ['afraid', 2], ['scare', 2], ['scary', 2], ['terrif', 3], ['terror', 3], ['horrif', 3],
+    ['fear', 3], ['scream', 3], ['shriek', 3], ['panic', 2], ['trembl', 2], ['shiver', 2],
+    ['flee', 2], ['fled', 2], ['blood', 2], ['frighten', 3], ['dread', 3], ['petrif', 3],
+  ],
+  sadness: [
+    ['sad', 3], ['cry', 3], ['cried', 3], ['weep', 3], ['wept', 3], ['tears', 2],
+    ['lonely', 2], ['grief', 3], ['griev', 3], ['mourn', 3], ['sorrow', 3], ['goodbye', 2],
+    ['farewell', 2], ['sigh', 2], ['miss', 2],
+  ],
+  anger: [
+    ['angry', 3], ['anger', 3], ['furious', 3], ['rage', 3], ['yell', 2], ['shout', 2],
+    ['slam', 2], ['smash', 2], ['hate', 3], ['curse', 3], ['fight', 2], ['argu', 2],
+    ['revenge', 3],
+  ],
+  eerie: [
+    ['eerie', 3], ['strange', 1], ['weird', 2], ['whisper', 2], ['shadow', 2], ['ghost', 2],
+    ['footstep', 2], ['knock', 2], ['echo', 1], ['vanish', 2], ['disappear', 2], ['flicker', 2],
+    ['creep', 2], ['haunt', 2], ['unseen', 2],
+  ],
+  calm: [
+    ['calm', 3], ['quiet', 2], ['peace', 3], ['gentle', 2], ['warm', 2], ['relax', 2],
+    ['smile', 2], ['lullaby', 2], ['serene', 3], ['safe', 2], ['soothing', 3], ['comfort', 2],
+  ],
+};
+const EN_NEGATIONS = new Set(['not', 'no', 'never', 'without', 'dont', "don't", "didn't", "wasn't", "isn't", 'nothing']);
 const NEGATIONS = ['不', '没', '没有', '别', '未', '无'];
 
 /** True when a negation word sits within 2 characters before `index`. */
@@ -57,7 +85,27 @@ export function scoreEmotions(text: string): Record<Emotion, number> {
       }
     }
   }
+  scoreEnglish(text, scores);
   return scores;
+}
+
+/** Adds English scores. A negation word within the two previous words turns a hit into reassurance. */
+function scoreEnglish(text: string, scores: Record<Emotion, number>): void {
+  const words = text.toLowerCase().match(/[a-z']+/g);
+  if (!words) return;
+  words.forEach((word, i) => {
+    for (const emotion of EMOTIONS) {
+      const hit = EN_LEXICON[emotion].find(([stem]) => word.startsWith(stem));
+      if (!hit) continue;
+      const negated = words.slice(Math.max(0, i - 2), i).some((w) => EN_NEGATIONS.has(w));
+      if (negated) {
+        if (emotion !== 'calm') scores.calm += 1;
+      } else {
+        scores[emotion] += hit[1];
+      }
+      return;
+    }
+  });
 }
 
 /** Pure, deterministic classifier. Always returns a valid emotion. */

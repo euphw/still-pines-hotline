@@ -90,10 +90,7 @@ export function emotionLabel(lang: Lang, e: Emotion): string {
   return t(lang, e);
 }
 
+/** English is the default; a language the visitor picked earlier is restored by the app. */
 export function detectLang(): Lang {
-  try {
-    return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
-  } catch {
-    return 'zh';
-  }
+  return 'en';
 }
