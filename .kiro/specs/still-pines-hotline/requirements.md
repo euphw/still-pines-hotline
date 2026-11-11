@@ -15,7 +15,7 @@ A single-page web app (phone and desktop). Visitors pick a room of a haunted hot
 
 ## 3. Emotion labelling
 3.1 Supported emotions: fear, sadness, anger, eerie, calm.
-3.2 A keyword classifier suggests an emotion from Chinese text, handling simple negation ("不害怕").
+3.2 A keyword classifier suggests an emotion from English or Chinese text, handling simple negation ("not afraid", "不害怕").
 3.3 With no keyword match the suggestion is eerie.
 3.4 The user can change the suggested emotion before saving; the saved value is the user's choice.
 3.5 The classifier is deterministic and never throws, for any input.
@@ -33,7 +33,7 @@ A single-page web app (phone and desktop). Visitors pick a room of a haunted hot
 5.4 If storage is unavailable the app still works in memory.
 
 ## 6. Language, sound, accessibility
-6.1 The UI is available in Chinese and English; the choice is remembered. Sample messages have English versions.
+6.1 The UI is available in English and Chinese. English is the default; a language the visitor picks is remembered. Sample messages exist in both languages.
 6.2 Sound effects are synthesized with WebAudio, off by default, with a toggle; the app works without audio support.
 6.3 `prefers-reduced-motion` disables animations without losing function.
 6.4 Touch targets are at least 44px.
